@@ -12,7 +12,7 @@ my $body = <<'EOF';
     <head>
         <script type="text/javascript" src="/jquery.js" language="javascript"></script>
         <script type="text/javascript" src="/swfobject.js" language="javascript"></script>
-        <script type="text/javascript" src="/evercookie.js" language="javascript"></script>
+        <script type="text/javascript" src="/evercookie/evercookie.js" language="javascript"></script>
     </head>
     <body>
         <script>
