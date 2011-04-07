@@ -75,7 +75,7 @@ my $app = sub {
 };
 
 builder {
-    enable "Static", root => 'htdocs', path => qr{\.css|\.js|\.swf$};
+    enable "Static", root => 'htdocs', path => qr{\.(?:css|js|swf|xap)$};
 
     enable "Evercookie";
 

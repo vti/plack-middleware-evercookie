@@ -376,7 +376,7 @@ this.evercookie_lso = function(name, value)
 	var attributes       = {};
 	attributes.id        = "myswf";
 	attributes.name      = "myswf";
-	swfobject.embedSWF("evercookie.swf", "swfcontainer", "1", "1", "9.0.0", false, flashvars, params, attributes);
+	swfobject.embedSWF(self.base + "evercookie.swf", "swfcontainer", "1", "1", "9.0.0", false, flashvars, params, attributes);
 }
 
 this.evercookie_png = function(name, value)
@@ -549,7 +549,7 @@ this.evercookie_silverlight = function(name, value) {
      * Ok. so, I tried doing this the proper dom way, but IE chokes on appending anything in object tags (including params), so this
      * is the best method I found. Someone really needs to find a less hack-ish way. I hate the look of this shit.
     */
-        var source = "evercookie.xap";
+        var source = self.base + "evercookie.xap";
         var minver = "4.0.50401.0";
         
         var initParam = "";
