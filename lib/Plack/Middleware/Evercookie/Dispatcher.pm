@@ -3,6 +3,7 @@ package Plack::Middleware::Evercookie::Dispatcher;
 use strict;
 use warnings;
 
+use Try::Tiny;
 use Plack::Util ();
 
 sub new {
@@ -21,9 +22,16 @@ sub dispatch {
     $action = ucfirst $action;
     my $class = "Plack::Middleware::Evercookie::$action";
 
-    Plack::Util::load_class($class);
+    my $res;
+    try {
+        Plack::Util::load_class($class);
+        $res = $class->new(env => $env)->run;
+    }
+    catch {
+        die $_ unless $_ =~ m/^Can't locate [^ ]+ in \@INC/;
+    };
 
-    return $class->new(env => $env)->run;
+    return $res;
 }
 
 1;

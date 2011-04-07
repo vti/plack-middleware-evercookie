@@ -27,10 +27,9 @@ sub call {
     $base = quotemeta $base;
 
     if ($env->{PATH_INFO} =~ m{^/$base/([a-z]+)$}) {
-        my $res =  $self->{dispatcher}->dispatch($env, $1);
-        use Data::Dumper;
-        warn Dumper $res;
-        return $res;
+        my $res = $self->{dispatcher}->dispatch($env, $1);
+        return $res if $res;
+        return [404, ['Content-Length' => 9], ['Not Found']];
     }
 
     return $self->app->($env);
