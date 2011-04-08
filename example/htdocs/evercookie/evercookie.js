@@ -498,21 +498,26 @@ function EvercookieLSO() {
 
     self.swfStore = new SwfStore({
         namespace: 'evercookie',
-        swf_url: '/evercookie/storage.swf',
-        onready: function() {
-        }
+        swf_url: '/evercookie/storage.swf'
     });
 
     self.movieName = 'evercookie';
 
     self.get = function(name, cb) {
+        var retries = 50;
         var wait = function() {
             if (self.swfStore.ready) {
                 var value = self.swfStore.get(name);
                 cb(self.getName(), value);
             }
             else {
-                setTimeout(wait, 100);
+                retries--;
+                if (retries) {
+                    setTimeout(wait, 100);
+                }
+                else {
+                    cb(self.getName(), undefined);
+                }
             }
         };
 
@@ -520,7 +525,9 @@ function EvercookieLSO() {
     };
 
     self.set = function(name, value) {
-        self.swfStore.set(name, value);
+        if (self.swfStore.ready) {
+            self.swfStore.set(name, value);
+        }
     };
 }
 
