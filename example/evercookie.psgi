@@ -11,7 +11,9 @@ my $body = <<'EOF';
 <!doctype html>
     <head>
         <script type="text/javascript" src="/jquery.js" language="javascript"></script>
-        <script type="text/javascript" src="/swfobject.js" language="javascript"></script>
+        <script type="text/javascript" src="/jquery.cookie.js" language="javascript"></script>
+        <script type="text/javascript" src="/jquery.dump.js" language="javascript"></script>
+        <script type="text/javascript" src="/evercookie/swfstore.js" language="javascript"></script>
         <script type="text/javascript" src="/evercookie/evercookie.js" language="javascript"></script>
     </head>
     <body>
@@ -30,27 +32,26 @@ my $body = <<'EOF';
             }
 
             $(document).ready(function() {
-                $(window).load(function() {
-                    ec = new evercookie({base: '/evercookie/'});
+                var ec = new Evercookie({base: '/evercookie/'});
 
+                ec.ready(function() {
                     ec.get('uid', function(value) {
-                        var uid;
-                        if (typeof value == 'undefined') {
-                            uid = genUID();
+                        if (!value) {
+                            //console.log('generating...');
+                            value = genUID();
                         }
-                        else {
-                            uid = value;
-                        }
-                        ec.set('uid', uid);
 
-                        $('#uid').html(uid);
-                    }, 1);
+                        ec.set('uid', value);
+
+                        $('#uid').html('<span>' + value + '</span>');
+                    });
                 });
             });
         </script>
 
         <h2>Your unique id is: <span id="uid"></span></h2>
         <small>Try refreshing your browser, cleaning cache, cookies etc</small>
+        <br />
     </body>
 </html>
 EOF

@@ -18,7 +18,7 @@ sub run {
     if ($cookie) {
         return [
             200,
-            [   'Content-Type'   => 'text/plain',
+            [   'Content-Type'   => 'image/png',
                 'Content-Length' => length($cookie),
                 'ETag'           => $cookie,
                 'Date'           => time2str(time),
@@ -33,7 +33,7 @@ sub run {
         if ($etag) {
             return [
                 304,
-                [   'Content-Type' => 'text/plain',
+                [   'Content-Type' => 'image/png',
 
                     'Content-Length' => 0,
                     'Date'           => time2str(time),
@@ -46,7 +46,7 @@ sub run {
 
         return [
             200,
-            [   'Content-Type'   => 'text/plain',
+            [   'Content-Type'   => 'image/png',
                 'Content-Length' => 0,
             ],
             ['']
