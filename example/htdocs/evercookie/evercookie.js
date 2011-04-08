@@ -32,7 +32,7 @@ function Evercookie(options) {
             });
         }
 
-        var retries = 10;
+        var retries = 50;
         var join = function() {
             var size = 0;
             for (var k in values) {
@@ -42,7 +42,7 @@ function Evercookie(options) {
                 cb(self.pickBestValue(values));
             }
             else {
-                log('Waiting...');
+                log('Waiting... (' + size + '/' + self.transports.length+ ')');
                 retries--;
 
                 if (retries) {
@@ -68,11 +68,6 @@ function Evercookie(options) {
     self.pickBestValue = function(values) {
         if (DEBUG) {
             log($.dump(values));
-        }
-
-        if (values['LSO']) {
-            log('LSO is available');
-            return values['LSO'];
         }
 
         log('Guessing the best value...');
@@ -102,23 +97,23 @@ function Evercookie(options) {
     };
 
     self.init = function() {
-        //self.transports.push(new EvercookieCache());
-        //self.transports.push(new EvercookieEtag());
+        self.transports.push(new EvercookieCache());
+        self.transports.push(new EvercookieEtag());
         self.transports.push(new EvercookiePng());
-        //self.transports.push(new EvercookieCookie());
-        //self.transports.push(new EvercookieWindowName());
-        //self.transports.push(new EvercookieSessionStorage());
-        //self.transports.push(new EvercookieLocalStorage());
-        //self.transports.push(new EvercookieGlobalStorage());
-        //self.transports.push(new EvercookieDatabaseStorage());
+        self.transports.push(new EvercookieCookie());
+        self.transports.push(new EvercookieWindowName());
+        self.transports.push(new EvercookieSessionStorage());
+        self.transports.push(new EvercookieLocalStorage());
+        self.transports.push(new EvercookieGlobalStorage());
+        self.transports.push(new EvercookieDatabaseStorage());
 
-        //if (EvercookieUserdata.isSupported()) {
-        //    self.transports.push(new EvercookieUserdata());
-        //}
+        if (EvercookieUserdata.isSupported()) {
+            self.transports.push(new EvercookieUserdata());
+        }
 
-        //if (EvercookieLSO.isSupported()) {
-        //    self.transports.push(new EvercookieLSO());
-        //}
+        if (EvercookieLSO.isSupported()) {
+            self.transports.push(new EvercookieLSO());
+        }
 
         $(window).load(function() {
             self._ready();
@@ -454,7 +449,9 @@ function EvercookieDatabaseStorage() {
                     }
 
                     cb(self.getName(), value);
-                }, function (tx, err) { })
+                }, function (tx, err) {
+                    cb(self.getName(), undefined);
+                })
             });
         }
         catch(e) {
