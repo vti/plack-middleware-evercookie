@@ -15,7 +15,7 @@ sub run {
     if (!$cookie) {
         return [
             304,
-            [   'Content-Type'   => 'text/html',
+            [   'Content-Type'   => 'image/png',
                 'Content-Length' => 0,
                 'Date'           => time2str(time)
             ],
@@ -25,7 +25,7 @@ sub run {
 
     return [
         200,
-        [   'Content-Type'   => 'text/html',
+        [   'Content-Type'   => 'image/png',
             'Content-Length' => length($cookie),
             'Date'           => time2str(time),
             'Last-Modified'  => 'Wed, 30 Jun 2010 21:36:48 GMT',

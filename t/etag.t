@@ -12,7 +12,7 @@ my $middleware = Plack::Middleware::Evercookie::Etag->new(env => $env);
 is_deeply(
     $middleware->run(),
     [   200,
-        [   'Content-Type'   => 'text/plain',
+        [   'Content-Type'   => 'image/png',
             'Content-Length' => 0
         ],
         ['']
@@ -24,7 +24,7 @@ $middleware = Plack::Middleware::Evercookie::Etag->new(env => $env);
 is_deeply(
     $middleware->run(),
     [   304,
-        [   'Content-Type'   => 'text/plain',
+        [   'Content-Type'   => 'image/png',
             'Content-Length' => 0,
             'Date'           => time2str(time),
             'ETag'           => 123,
@@ -39,7 +39,7 @@ $middleware = Plack::Middleware::Evercookie::Etag->new(env => $env);
 is_deeply(
     $middleware->run(),
     [   200,
-        [   'Content-Type'   => 'text/plain',
+        [   'Content-Type'   => 'image/png',
             'Content-Length' => 0
         ],
         ['']
@@ -51,7 +51,7 @@ $middleware = Plack::Middleware::Evercookie::Etag->new(env => $env);
 is_deeply(
     $middleware->run(),
     [   200,
-        [   'Content-Type'   => 'text/plain',
+        [   'Content-Type'   => 'image/png',
             'Content-Length' => 3,
             'ETag'           => '123',
             'Date'           => time2str(time),
