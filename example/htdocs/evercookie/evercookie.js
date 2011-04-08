@@ -105,7 +105,10 @@ function Evercookie(options) {
         self.transports.push(new EvercookieSessionStorage());
         self.transports.push(new EvercookieLocalStorage());
         self.transports.push(new EvercookieGlobalStorage());
-        self.transports.push(new EvercookieDatabaseStorage());
+
+        if (EvercookieDatabaseStorage.isSupported()) {
+            self.transports.push(new EvercookieDatabaseStorage());
+        }
 
         if (EvercookieUserdata.isSupported()) {
             self.transports.push(new EvercookieUserdata());
@@ -141,6 +144,9 @@ function EvercookieCache() {
                 $.cookie(self.cookie_name, cookie_value, {expires: 3600});
 
                 cb(self.getName(), data);
+            },
+            error: function() {
+                cb(self.getName(), undefined);
             }
         });
     };
@@ -173,6 +179,9 @@ function EvercookieEtag() {
                 $.cookie(self.cookie_name, cookie_value, {expires: 3600});
 
                 cb(self.getName(), data);
+            },
+            error: function() {
+                cb(self.getName(), undefined);
             }
         });
     };
@@ -233,7 +242,7 @@ function EvercookiePng() {
                 cb(self.getName(), value);
             })
             .error(function() {
-                cb(self.getName(), value);
+                cb(self.getName(), undefined);
             });
     };
 
@@ -476,6 +485,10 @@ function EvercookieDatabaseStorage() {
         catch(e) {
         };
     };
+}
+
+EvercookieDatabaseStorage.isSupported = function() {
+    return !!window.openDatabase;
 }
 
 function EvercookieLSO() {

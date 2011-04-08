@@ -37,7 +37,6 @@ my $body = <<'EOF';
                 ec.ready(function() {
                     ec.get('uid', function(value) {
                         if (!value) {
-                            //console.log('generating...');
                             value = genUID();
                         }
 
