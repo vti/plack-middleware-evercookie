@@ -504,7 +504,8 @@ function EvercookieLSO() {
 
     self.swfStore = new SwfStore({
         namespace: 'evercookie',
-        swf_url: EVERCOOKIE_BASE_STATIC + '/storage.swf'
+        swf_url: EVERCOOKIE_BASE_STATIC + '/storage.swf',
+        timeout: 5
     });
 
     self.movieName = 'evercookie';
