@@ -32,7 +32,7 @@ my $body = <<'EOF';
             }
 
             $(document).ready(function() {
-                var ec = new Evercookie({base: '/evercookie/'});
+                var ec = new Evercookie();
 
                 ec.ready(function() {
                     ec.get('uid', function(value) {

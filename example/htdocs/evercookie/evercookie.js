@@ -4,6 +4,12 @@
 
 var DEBUG = location.search.substring(1).match(/^debug/);
 
+if (typeof EVERCOOKIE_BASE_URL === 'undefined')
+    EVERCOOKIE_BASE_URL = '/evercookie';
+
+if (typeof EVERCOOKIE_BASE_STATIC === 'undefined')
+    EVERCOOKIE_BASE_STATIC = '/evercookie';
+
 function log () {
     if (DEBUG) {
         var args = (arguments.length > 1) ? Array.prototype.join.call(arguments, " ") : arguments[0];
@@ -131,7 +137,7 @@ function EvercookieCache() {
 
     self.getName = function() { return 'cache'; };
 
-    self.url = '/evercookie/cache';
+    self.url = EVERCOOKIE_BASE_URL + '/cache';
     self.cookie_name = 'evercookie_cache';
 
     self.get = function(name, cb) {
@@ -167,7 +173,7 @@ function EvercookieEtag() {
     self.getName = function() { return 'etag'; };
 
     self.cookie_name = 'evercookie_etag';
-    self.url = '/evercookie/etag';
+    self.url = EVERCOOKIE_BASE_URL + '/etag';
 
     self.get = function(name, cb) {
         var cookie_value = $.cookie(self.cookie_name);
@@ -201,7 +207,7 @@ function EvercookiePng() {
 
     self.getName = function() { return 'png'; };
 
-    self.url = '/evercookie/png';
+    self.url = EVERCOOKIE_BASE_URL + '/png';
     self.cookie_name = 'evercookie_png';
 
     self.get = function(name, cb) {
@@ -498,7 +504,7 @@ function EvercookieLSO() {
 
     self.swfStore = new SwfStore({
         namespace: 'evercookie',
-        swf_url: '/evercookie/storage.swf'
+        swf_url: EVERCOOKIE_BASE_STATIC + '/storage.swf'
     });
 
     self.movieName = 'evercookie';
